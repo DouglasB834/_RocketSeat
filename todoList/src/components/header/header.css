@@ -1,0 +1,13 @@
+
+.header {
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    background-color: #0D0D0D;
+    align-items: center;
+  
+}
+.header > h2{
+    color: #5E60CE
+
+}

@@ -1,0 +1,27 @@
+.ul_todoList_content{
+    display: flex;
+    /* flex-direction: column; */
+    gap: 1rem;
+    background-color: #333333;
+    padding: 1rem;
+    border-radius: 5px;
+    justify-content: space-between;
+}
+
+.ul_todoList_content .card_text{
+    color: #F2F2F2 ;
+}
+
+.ul_todoList_content  p.lineThrough  {
+    opacity: .4;
+    text-decoration: line-through;
+}
+
+.ul_todoList_content label {
+    display: flex;
+    gap: 1rem;
+}
+
+.checked_toDo {
+    cursor: pointer;
+}
