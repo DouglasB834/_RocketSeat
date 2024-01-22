@@ -9,10 +9,23 @@ import {
   TaskInput,
 } from "./styled";
 
+import { useForm } from "react-hook-form";
+
 export const Home = () => {
+  const {
+    handleSubmit,
+    register,
+    // reset,
+    watch,
+    // formState: { errors },
+  } = useForm({});
+
+  const handleSubmitForm = (event: React.FormEvent<HTMLFormElement>) => {};
+  const taks = watch("task");
+
   return (
     <HomeContainer>
-      <form action="">
+      <form action="" onSubmit={handleSubmit(handleSubmitForm)}>
         <FormContainer>
           <label htmlFor="task">Vou trabalhar em</label>
           <TaskInput
@@ -20,6 +33,7 @@ export const Home = () => {
             type="text"
             list="task_options"
             placeholder="Digite o nome da tarefa"
+            {...register("task")}
           />
           <datalist id="task_options">
             <option value="Projeto 1" />
@@ -34,6 +48,7 @@ export const Home = () => {
             step="5"
             max={60}
             min={0}
+            {...register("timeAmount")}
           />
           <span>minutos.</span>
         </FormContainer>
@@ -46,9 +61,9 @@ export const Home = () => {
           <span>0</span>
         </FormContentTime>
         {/* btn disabled */}
-        <StartButton type="submit">
+        <StartButton disabled title="Começar tarefa" type="submit">
           <ArrowBigRightDash size={19} />
-          Start
+          Começar
         </StartButton>
       </form>
     </HomeContainer>
