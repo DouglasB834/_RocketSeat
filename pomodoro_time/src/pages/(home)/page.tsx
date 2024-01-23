@@ -8,20 +8,34 @@ import {
   StartButton,
   TaskInput,
 } from "./styled";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as zod from "zod";
 
 import { useForm } from "react-hook-form";
 
-export const Home = () => {
-  const {
-    handleSubmit,
-    register,
-    // reset,
-    watch,
-    // formState: { errors },
-  } = useForm({});
+const newCycleFormValidationSchema = zod.object({
+  task: zod.string().min(1, "Informe a tarefa"),
+  timeAmount: zod.number().min(5).max(60),
+});
 
-  const handleSubmitForm = (event: React.FormEvent<HTMLFormElement>) => {};
+type newCycleFormData = zod.infer<typeof newCycleFormValidationSchema>;
+
+export const Home = () => {
+  const { handleSubmit, register, reset, watch } = useForm<newCycleFormData>({
+    resolver: zodResolver(newCycleFormValidationSchema),
+    defaultValues: {
+      task: "",
+      timeAmount: 5,
+    },
+  });
+
+  const handleSubmitForm = (data: newCycleFormData) => {
+    console.log(data);
+    reset();
+  };
+
   const taks = watch("task");
+  const isSubmitDisabled = !taks;
 
   return (
     <HomeContainer>
@@ -46,9 +60,9 @@ export const Home = () => {
             placeholder="00"
             type="number"
             step="5"
+            min={5}
             max={60}
-            min={0}
-            {...register("timeAmount")}
+            {...register("timeAmount", { valueAsNumber: true })}
           />
           <span>minutos.</span>
         </FormContainer>
@@ -61,7 +75,11 @@ export const Home = () => {
           <span>0</span>
         </FormContentTime>
         {/* btn disabled */}
-        <StartButton disabled title="Começar tarefa" type="submit">
+        <StartButton
+          disabled={isSubmitDisabled}
+          title="Começar tarefa"
+          type="submit"
+        >
           <ArrowBigRightDash size={19} />
           Começar
         </StartButton>
